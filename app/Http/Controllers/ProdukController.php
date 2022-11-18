@@ -2,79 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produk;
 use Illuminate\Http\Request;
 
-class MhsController extends Controller
+class ProdukController extends Controller
 {
-    public function MhsView() {
-        //$allDataUser=User::all();
-        // $Data['allDataMhs']=::all();
-        // return view('backend.mhs.view_mhs', $Data);
+    public function ProdukView() {
+        $Data['allDataProduk']=Produk::all();
+        return view('backend.produk.view_produk', $Data);
+
 
     }
 
-//     public function MhsAdd() {
-//         //$allDataUser=User::all();
-//        // $Data['allDataUser']=User::all();
-//         return view('backend.mhs.add_mhs');
-//     }
+    public function ProdukAdd() {
+        return view('backend.produk.add_produk');
+    }
 
-//     public function MhsStore(Request $request) {
+    public function ProdukStore(Request $request) {
+       
+        $data=new Produk();
+        $data->namaproduk=$request->namaproduk;
+        $data->hargaproduk=$request->hargaproduk;
+        $data->deskripsiproduk=$request->deskripsiproduk;
+        $data->fotoproduk=$request->fotoproduk;
+        $data->save();
+
+        return redirect()->route('produk.view')->with('info','Tambah Produk Berhasil');
+
+    }
+
+    public function ProdukEdit($id){
+    
+        $editData= Produk::find($id);
+        return view('backend.produk.edit_produk', compact('editData'));
+    }
+
+    public function ProdukUpdate(Request $request, $id) {
+       
+        $data=new Produk();
+        $data->namaproduk=$request->namaproduk;
+        $data->hargaproduk=$request->hargaproduk;
+        $data->deskripsiproduk=$request->deskripsiproduk;
+        $data->fotoproduk=$request->fotoproduk;
         
-//         // $validatedData=$request->validate([
-//         //     'nim' =>'required',
-//         //     'nama' =>'required',
-//         //     'alamat' =>'required',
-//         //     'tanggal_lahir' =>'required',
-//         // ]);
-//         //dd($request);
-//         $data=new Mahasiswa();
-//         $data->nim=$request->nim;
-//         $data->nama=$request->nama;
-//         $data->alamat=$request->alamat;
-//         $data->tanggal_lahir=$request->tanggal_lahir;
-//         $data->save();
+        $data->save();
 
-//         return redirect()->route('mhs.view')->with('info','Tambah Mahasiswa Berhasil');
+        return redirect()->route('produk.view')->with('info','Update Produk Berhasil');
 
-//     }
+    }
 
-//     public function MhsEdit($id){
-//         // dd('berhasil masuk controller user edit');
-//         $editData= Mahasiswa::find($id);
-//         return view('backend.mhs.edit_mhs', compact('editData'));
-//     }
-
-//     public function MhsUpdate(Request $request, $id) {
+    public function ProdukDelete($id){
         
-//         // $validatedData=$request->validate([
-//         //     'nim' =>'required',
-//         //     'nama' =>'required',
-//         //     'alamat' =>'required',
-//         //     'tanggal_lahir' =>'required',
-//         // ]);
-//         //dd($request);
-//         $data=Mahasiswa::find($id);
-//         $data->nim=$request->nim;
-//         $data->nama=$request->nama;
-//         $data->alamat=$request->alamat;
-//         $data->tanggal_lahir=$request->tanggal_lahir;
-//         // if($request->password!=""){
-//         //     $data->password=bcrypt($request->password);
-//         // }
-//         $data->save();
+        $deleteData= Produk::find($id);
+        $deleteData->delete();
 
-//         return redirect()->route('mhs.view')->with('info','Update Mahasiswa Berhasil');
+        return redirect()->route('produk.view')->with('info','Delete Produk Berhasil');
 
-//     }
-
-//     public function MhsDelete($id){
-//         // dd('berhasil masuk controller user edit');
-//         $deleteData= Mahasiswa::find($id);
-//         $deleteData->delete();
-
-//         return redirect()->route('mhs.view')->with('info','Delete Mahasiswa Berhasil');
-
-//     }
+    }
     
 }
