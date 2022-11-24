@@ -33,3 +33,5 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+Route::get('/admin/logout',[AdminController::class,'logout'])->name('admin.logout');
