@@ -29,6 +29,8 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::get('/admin/logout',[AdminController::class, 'logout'])->name('admin.logout');
+
 route::prefix('produk')->group(function(){
     Route::get('/view',[ProdukController::class, 'ProdukView'])->name('produk.view');
     Route::get('/add',[ProdukController::class, 'ProdukAdd'])->name('produk.add');
