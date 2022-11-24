@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProdukController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,4 +33,15 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+});
+
+Route::get('/admin/logout',[AdminController::class, 'logout'])->name('admin.logout');
+
+route::prefix('produk')->group(function(){
+    Route::get('/view',[ProdukController::class, 'ProdukView'])->name('produk.view');
+    Route::get('/add',[ProdukController::class, 'ProdukAdd'])->name('produk.add');
+    Route::post('/store',[ProdukController::class, 'ProdukStore'])->name('produk.store');
+    Route::get('/edit/{id}',[ProdukController::class, 'ProdukEdit'])->name('produk.edit');
+    Route::post('/update/{id}',[ProdukController::class, 'ProdukUpdate'])->name('produk.update');
+    Route::get('/delete/{id}',[ProdukController::class, 'ProdukDelete'])->name('produk.delete');
 });
