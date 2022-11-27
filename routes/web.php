@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Backend\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +40,13 @@ route::prefix('produk')->group(function(){
     Route::get('/edit/{id}',[ProdukController::class, 'ProdukEdit'])->name('produk.edit');
     Route::post('/update/{id}',[ProdukController::class, 'ProdukUpdate'])->name('produk.update');
     Route::get('/delete/{id}',[ProdukController::class, 'ProdukDelete'])->name('produk.delete');
+});
+//user
+Route::prefix('users')->group(function(){
+    Route::get('/view',[UserController::class, 'UserView' ])->name('user.view');
+    Route::get('/add',[UserController::class, 'UserAdd' ])->name('user.add');
+    Route::post('/store',[UserController::class, 'UserStore' ])->name('users.store');
+    Route::get('/edit/{id}',[UserController::class, 'UserEdit' ])->name('users.edit');
+    Route::post('/update/{id}',[UserController::class, 'UserUpdate' ])->name('users.update');
+    Route::get('/delete/{id}',[UserController::class, 'UserDelete' ])->name('users.delete');
 });
