@@ -1,9 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,36 +18,29 @@ use App\Http\Controllers\Backend\UserController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return view('welcome');
 });
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified',
+    'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('admin.index');
+        return view('dashboard');
     })->name('dashboard');
 });
 
-Route::get('/admin/logout',[AdminController::class, 'logout' ])->name('admin.logout');
+Route::get('/admin/logout',[AdminController::class, 'logout'])->name('admin.logout');
 
-//barang
-Route::prefix('barang')->group(function(){
-    Route::get('/view',[BarangController::class, 'BarangView' ])->name('barang.view');
-    Route::get('/add',[BarangController::class, 'BarangAdd' ])->name('barang.add');
-    Route::post('/store',[BarangController::class, 'BarangStore' ])->name('barangs.store');
-    Route::get('/edit/{id}',[BarangController::class, 'BarangEdit' ])->name('barangs.edit');
-    Route::post('/update/{id}',[BarangController::class, 'BarangUpdate' ])->name('barangs.update');
-    Route::get('/delete/{id}',[BarangController::class, 'BarangDelete' ])->name('barangs.delete');
+route::prefix('produk')->group(function(){
+    Route::get('/view',[ProdukController::class, 'ProdukView'])->name('produk.view');
+    Route::get('/add',[ProdukController::class, 'ProdukAdd'])->name('produk.add');
+    Route::post('/store',[ProdukController::class, 'ProdukStore'])->name('produk.store');
+    Route::get('/edit/{id}',[ProdukController::class, 'ProdukEdit'])->name('produk.edit');
+    Route::post('/update/{id}',[ProdukController::class, 'ProdukUpdate'])->name('produk.update');
+    Route::get('/delete/{id}',[ProdukController::class, 'ProdukDelete'])->name('produk.delete');
 });
-
 //user
 Route::prefix('users')->group(function(){
     Route::get('/view',[UserController::class, 'UserView' ])->name('user.view');

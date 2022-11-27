@@ -1,16 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
-use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 
 class AdminController extends Controller
 {
     public function logout(){
-        FacadesAuth::logout();
+        auth::logout();
         return Redirect()->route('login');
     }
 }
