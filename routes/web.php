@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::get('/admin/logout',[AdminController::class, 'logout'])->name('admin.logout');
 
 route::prefix('produk')->group(function(){
     Route::get('/view',[ProdukController::class, 'ProdukView'])->name('produk.view');
