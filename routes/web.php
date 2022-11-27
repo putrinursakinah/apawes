@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Backend\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,28 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        return view('admin.index');
     })->name('dashboard');
+});
+
+Route::get('/admin/logout',[AdminController::class, 'logout' ])->name('admin.logout');
+
+//barang
+Route::prefix('barang')->group(function(){
+    Route::get('/view',[BarangController::class, 'BarangView' ])->name('barang.view');
+    Route::get('/add',[BarangController::class, 'BarangAdd' ])->name('barang.add');
+    Route::post('/store',[BarangController::class, 'BarangStore' ])->name('barangs.store');
+    Route::get('/edit/{id}',[BarangController::class, 'BarangEdit' ])->name('barangs.edit');
+    Route::post('/update/{id}',[BarangController::class, 'BarangUpdate' ])->name('barangs.update');
+    Route::get('/delete/{id}',[BarangController::class, 'BarangDelete' ])->name('barangs.delete');
+});
+
+//user
+Route::prefix('users')->group(function(){
+    Route::get('/view',[UserController::class, 'UserView' ])->name('user.view');
+    Route::get('/add',[UserController::class, 'UserAdd' ])->name('user.add');
+    Route::post('/store',[UserController::class, 'UserStore' ])->name('users.store');
+    Route::get('/edit/{id}',[UserController::class, 'UserEdit' ])->name('users.edit');
+    Route::post('/update/{id}',[UserController::class, 'UserUpdate' ])->name('users.update');
+    Route::get('/delete/{id}',[UserController::class, 'UserDelete' ])->name('users.delete');
 });
